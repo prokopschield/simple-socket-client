@@ -1,0 +1,15 @@
+{
+	"name": "@prokopschield/simple-socket-client",
+	"description": "simple client for socket.io",
+	"version": "0.1.0-1",
+	"main": "lib/index.js",
+	"author": "Prokop Schield",
+	"dependencies": {
+		"socket.io-client": "^4.7.1"
+	},
+	"devDependencies": {
+		"@types/node": ">=16"
+	},
+	"keywords": [],
+	"license": "GPL-3.0-or-later"
+}
