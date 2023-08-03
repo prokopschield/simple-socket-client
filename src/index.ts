@@ -1,18 +1,21 @@
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
 export function createClient<
 	T extends Record<string, (...args: any[]) => Promise<any>>
->(endpoint: string): T {
+>(endpoint: string): [T, Socket] {
 	const socket = io(endpoint);
 	const target = {} as T;
 
-	return new Proxy(target, {
-		get(_target, key) {
-			return (...args: any[]) => {
-				return new Promise((resolve) => {
-					socket.emit(String(key), ...args, resolve);
-				});
-			};
-		},
-	});
+	return [
+		new Proxy(target, {
+			get(_target, key) {
+				return (...args: any[]) => {
+					return new Promise((resolve) => {
+						socket.emit(String(key), ...args, resolve);
+					});
+				};
+			},
+		}),
+		socket,
+	];
 }
